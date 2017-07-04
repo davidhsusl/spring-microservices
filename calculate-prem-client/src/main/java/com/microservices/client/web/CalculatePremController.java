@@ -27,7 +27,7 @@ public class CalculatePremController {
   @Autowired private Registration registration;
 
   @RequestMapping(value = "/calculate/{a}/{b}", method = RequestMethod.GET)
-  public Integer calculate(@PathVariable Integer a, @PathVariable Integer b) {
+  public String calculate(@PathVariable Integer a, @PathVariable Integer b) {
     List<ServiceInstance> instances = discoveryClient.getInstances(registration.getServiceId());
     Integer r = a + b;
     instances.forEach(
@@ -39,6 +39,6 @@ public class CalculatePremController {
                     + instance.getServiceId()
                     + ", result:"
                     + r));
-    return r;
+    return "Prem is " + r + ", calculated by CALCULATE-PREM-SERVICE";
   }
 }

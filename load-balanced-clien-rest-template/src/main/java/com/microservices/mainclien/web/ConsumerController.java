@@ -12,6 +12,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
+/**
+ * @author David Hsu
+ * @since 2017/07/04
+ */
 @RestController
 public class ConsumerController {
 
