@@ -32,9 +32,6 @@ public class ConsumerController {
             .buildAndExpand(a, b)
             .toUri();
 
-    String location = restTemplate.getForEntity(uri, String.class).getBody();
-    log.info("location to: {}", location);
-
-    return location;
+    return restTemplate.getForEntity(uri, String.class).getBody();
   }
 }
