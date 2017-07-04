@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.serviceregistry.Registration;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,15 +31,20 @@ public class CalculatePremController {
   public String calculate(@PathVariable Integer a, @PathVariable Integer b) {
     List<ServiceInstance> instances = discoveryClient.getInstances(registration.getServiceId());
     Integer r = a + b;
-    instances.forEach(
-        instance ->
-            log.info(
-                "/add, host:"
-                    + instance.getHost()
-                    + ", service_id:"
-                    + instance.getServiceId()
-                    + ", result:"
-                    + r));
+
+    if (!CollectionUtils.isEmpty(instances)) {
+      ServiceInstance instance = instances.get(0);
+      log.info(
+          "/calculate, host:"
+              + instance.getHost()
+              + ", service_id:"
+              + instance.getServiceId()
+              + ", num: "
+              + instances.size()
+              + ", result:"
+              + r);
+    }
+
     return "Prem is " + r + ", calculated by CALCULATE-PREM-SERVICE2";
   }
 }
